@@ -16,7 +16,7 @@ BANCO_QUESTOES = [
     {
         "id": "Q02", "materia": "Português",
         "enunciado": "Identifique a opção em que a crase foi empregada incorretamente:",
-        "alternativas": ["A) Fomos à festa de formatura.", "B) Ele entregou o documento à diretora.", "C) Começou a chover às duas horas.", "D) Prefiro passear a ficar em casa."],
+        "alternativas": ["A) Fomos à festa de formatura.", "B) Ele entregue o documento à diretora.", "C) Começou a chover às duas horas.", "D) Prefiro passear a ficar em casa."],
         "gabarito": "D) Prefiro passear a ficar em casa."
     },
     {
@@ -213,7 +213,7 @@ BANCO_QUESTOES = [
     },
     {
         "id": "Q34", "materia": "Química",
-        "enunciado": "As ligações químicas predominantes encontradas nas moléculas de água ($H_2O$) são do tipo:",
+        "enunciado": "As ligações químicas encontradas nas moléculas de água ($H_2O$) são do tipo:",
         "alternativas": ["A) Iônicas", "B) Metálicas", "C) Covalentes polares", "D) Coordenadas puras"],
         "gabarito": "C) Covalentes polares"
     },
@@ -243,7 +243,7 @@ BANCO_QUESTOES = [
     },
     {
         "id": "Q39", "materia": "Biologia",
-        "enunciado": "Relação ecológica interespecífica em que ambas as espécies associadas se beneficiam, sendo a relação obrigatória para a sobrevivência de ambas, chama-se:",
+        "enunciado": "Relação ecológica interespecífica em que ambas as espécies associadas se beneficiam, sendo a relação obrigatória para a sobrevivência, chama-se:",
         "alternativas": ["A) Competição", "B) Mutualismo", "C) Comensalismo", "D) Parasitismo"],
         "gabarito": "B) Mutualismo"
     },
@@ -254,7 +254,7 @@ BANCO_QUESTOES = [
         "gabarito": "C) Mistura heterogênea"
     },
 
-    # Língua Estrangeira (Inglês/Espanhol adaptado) e Atualidades/Gerais (Q41 a Q48)
+    # Língua Estrangeira e Atualidades (Q41 a Q48)
     {
         "id": "Q41", "materia": "Língua Estrangeira",
         "enunciado": "In English, choose the alternative that correctly completes the sentence: 'If I ___ rich, I would travel around the world.'",
@@ -305,15 +305,40 @@ BANCO_QUESTOES = [
     }
 ]
 
-TEMAS_REDACAO = [
-    "O impacto da inteligência artificial nas relações de trabalho e na educação contemporânea.",
-    "Os desafios para a preservação do patrimônio histórico e cultural no Brasil.",
-    "A questão do desperdício de alimentos e a segurança alimentar na sociedade moderna.",
-    "O papel e a valorização da ciência no desenvolvimento social do Brasil."
-]
+# --- BANCO DE TEMAS E TEXTOS MOTIVADORES (PADRÃO UEMG) ---
+PAINEL_REDACAO = {
+    "Tema 1": {
+        "tema": "O impacto da inteligência artificial nas relações de trabalho e na educação contemporânea.",
+        "textos": [
+            "**Texto I:** 'A automação impulsionada por algoritmos avançados e inteligência artificial generativa redefine as competências exigidas pelo mercado laboral, exigindo dos sistemas educacionais uma transição urgente para a criatividade, pensamento crítico e letramento digital.' (Relatório Global de Empregabilidade)",
+            "**Texto II:** 'Se por um lado a tecnologia democratiza o acesso à informação e personaliza o ensino, por outro acentua desigualdades estruturais decorrentes da exclusão digital e da falta de infraestrutura nas escolas públicas do país.'"
+        ]
+    },
+    "Tema 2": {
+        "tema": "Os desafios para a preservação do patrimônio histórico e cultural no Brasil.",
+        "textos": [
+            "**Texto I:** 'O patrimônio cultural — material e imaterial — constitui a memória coletiva e a identidade de um povo. No Brasil, capitais históricas como Ouro Preto e centros urbanos seculares enfrentam pressões imobiliárias, escassez de recursos públicos para restauro e negligência na conservação.'",
+            "**Texto II:** 'Preservar o passado não significa estagnar o presente, mas reconhecer nas raízes históricas o alicerce para a construção da cidadania e do pertencimento social nas próximas gerações.'"
+        ]
+    },
+    "Tema 3": {
+        "tema": "A questão do desperdício de alimentos e a segurança alimentar na sociedade moderna.",
+        "textos": [
+            "**Texto I:** 'Toneladas de alimentos perfeitamente próprios para o consumo são descartadas diariamente ao longo da cadeia de suprimentos, desde a colheita no campo até o descarte nas residências, contrastando frontalmente com índices alarmantes de insegurança alimentar.'",
+            "**Texto II:** 'O combate ao desperdício alimentar exige uma revisão profunda dos hábitos de consumo contemporâneos, políticas públicas logísticas eficientes e campanhas de conscientização voltadas para a sustentabilidade e solidariedade social.'"
+        ]
+    },
+    "Tema 4": {
+        "tema": "O papel e a valorização da ciência no desenvolvimento social do Brasil.",
+        "textos": [
+            "**Texto I:** 'A produção científica nacional demonstra resiliência e impacto internacional notável em áreas como saúde pública, agricultura tropical e energias renováveis, muitas vezes operando sob severas restrições orçamentárias e cortes de financiamento.'",
+            "**Texto II:** 'A valorização da ciência não se restringe ao reconhecimento acadêmico, mas traduz-se na garantia de soberania nacional, melhoria da qualidade de vida da população e no combate direto ao negacionismo científico.'"
+        ]
+    }
+}
 
 st.title("📝 Simulado Oficial UEMG (48 Questões + Redação)")
-st.write("Esta é a simulação completa no formato idêntico ao vestibular da UEMG. Responda com calma e atenção ao seu grau de certeza.")
+st.write("Esta é a simulação completa no formato idêntico ao vestibular da UEMG. Responda com atenção à prova objetiva e leia os textos motivadores antes de redigir sua dissertação.")
 
 nome_aluna = st.text_input("Digite o seu nome completo ou apelido:")
 
@@ -326,7 +351,10 @@ if nome_aluna:
             random.shuffle(alt)
             q["alternativas_embaralhadas"] = alt
         st.session_state.questoes_sorteadas = q_sort
-        st.session_state.tema_redacao = random.choice(TEMAS_REDACAO)
+        
+        # Sorteia um dos temas do painel de redação com seus respectivos textos motivadores
+        chave_tema_sorteado = random.choice(list(PAINEL_REDACAO.keys()))
+        st.session_state.dados_redacao = PAINEL_REDACAO[chave_tema_sorteado]
 
     st.markdown("---")
     st.header("🎯 Prova Objetiva (48 Questões)")
@@ -347,11 +375,17 @@ if nome_aluna:
         respostas_usuario[q["id"]] = {"resposta": resp, "certeza": certeza}
         st.markdown("---")
 
-    st.header("✍️ Proposta de Redação")
-    st.info(f"**Tema Sorteado para você:** {st.session_state.tema_redacao}")
-    st.write("*Instrução:* Elabore um texto dissertativo-argumentativo estruturado (Introdução, Desenvolvimento e Conclusão) com norma-padrão.")
+    st.header("✍️ Proposta de Redação & Textos Motivadores")
+    st.info(f"**Tema Sorteado para você:** {st.session_state.dados_redacao['tema']}")
     
-    texto_redacao = st.text_area("Digite ou cole sua redação aqui:", height=300)
+    st.markdown("#### 📚 Textos Motivadores de Apoio:")
+    for t_motivo in st.session_state.dados_redacao["textos"]:
+        st.markdown(t_motivo)
+    
+    st.markdown("---")
+    st.write("*Instrução:* Com base na leitura dos textos motivadores e nos seus conhecimentos, elabore um texto dissertativo-argumentativo estruturado (Introdução, Desenvolvimento e Conclusão) em norma-padrão.")
+    
+    texto_redacao = st.text_area("Digite ou cole sua redação aqui:", height=350)
 
     if st.button("Finalizar Prova Oficial e Gerar Relatório"):
         if len(texto_redacao.strip()) < 50:
